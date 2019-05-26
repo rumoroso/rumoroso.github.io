@@ -1,9 +1,112 @@
 <html>
 <head><title>Changelog</title></head>
 <body>
-<div class="flex-grid dialog-content" id="release_notes">
-    <h1>Headingsmap - Release notes</h1>
-    <div class="contents custom-scrollbar">
+<h1>Headingsmap</h1>
+<div id="help_panel">
+    <h2>Help</h2>
+    <div>
+        <p>HeadingsMap is a browser extension that shows the headers structure of the websites. I created it because I
+            needed a tool for making more simple the checking of headers structure when testing them from the point of
+            view of accessibility. With that in mind, the requirements were:</p>
+        <ul>
+            <li>List the headers in order with their levels and hierarchy</li>
+            <li>Identify when there are errors (wrong hierarchy, empty headers,...)</li>
+        </ul>
+        <p>Basically, the extension extracts the list of headers and sections structure and shows the results in
+            a tree according to the hierarchy that they have. The headers in the document are identified</p>
+        <p>Since its first version (released in May 5th, 2008), it had a lot of changes (mostly improvements but also
+            bugfixes). One of them was the introduction of the HTML 5 outline algorithm for showing the sections
+            structure of the documents. Sadly, according to what the W3C says (
+            <a href="https://www.w3.org/TR/2017/REC-html52-20171214/sections.html#creating-an-outline" target="_blank">HTML
+                5.2 Creating an outline</a>), there are no browsers or assistive technology with native implementations
+            of that algorithm, so it cannot be relied upon to convey document structure to users. Anyway, I decided to
+            keep the analysis because the algorithm is still valid and I think that having it in a tool helps to the
+            developers for adding a better structure to the documents.</p>
+        <h3>Features</h3>
+        <ul>
+            <li>List of headings with information about their level</li>
+            <li>Notification when there are errors in the hierarchical structure</li>
+            <li>If there are elements that use <em>role</em> attribute with value <em>heading</em>, they are also listed
+                and considered in the structure (their level is according to the value of <em>aria-level</em> attribute
+                or 2 when it is not defined).</li>
+            <li>List of sections with header information and warnings for errors in the structure</li>
+            <li>Information from the main document and also from the documents inside iframes (includes a document
+                selector that is active when there are multiple documents)</li>
+            <li>By clicking on the headers the document scrolls to the position of the header/section and highlights
+                it (if the header is visible)</li>
+            <li>Detects changes in the DOM and when they finish it updates the trees</li>
+            <li>It can also be refreshed manually</li>
+            <li>Allow collapsing list of headers by levels</li>
+            <li>Dark theme (optional)</li>
+            <li>HTML 5 Outline test is optional</li>
+            <li>CSS outline for identifying the header (or section) when clicking the tree and if it is visible in the
+                page</li>
+            <li>It doesn't show hidden headers or sections (hidden for assistive technologies)</li>
+            <li>If the header (or section) is an anchor, the link in the results has the href pointing to it (useful for
+                being copied directly from the tree with the option in the contextual menu of the browser)</li>
+            <li>If header/section content uses aria-label, its value can be shown (optional property configurable in the
+                settings section)</li>
+            <li>Version for multiple browsers (it uses the browserExtensions API):
+                <ul>
+                    <li><a href="https://addons.mozilla.org/es/firefox/addon/headingsmap/" target="_blank">Firefox</a>
+                    </li>
+                    <li><a href="https://chrome.google.com/webstore/detail/headingsmap/flbjommegcjonpdmenkdiocclhjacmbi"
+                           target="_blank">Chrome</a></li>
+                    <li><a href="https://chrome.google.com/webstore/detail/headingsmap/flbjommegcjonpdmenkdiocclhjacmbi"
+                           target="_blank">Vivaldi (uses shame version as Chrome)</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <h3>HeadingsMap tree - settings</h3>
+        <dl>
+            <dt>Show heading level</dt>
+            <dd>It includes the heading level (1 to 6) that is used as tag (h1 to h6)</dd>
+            <dt>Identify errors</dt>
+            <dd>When active, it highlights the tree items that correspond to headers that don't follow
+                the right order (for instance, one h4 after one h2 instead of being h3)
+            </dd>
+            <dt>Error if not initial h1</dt>
+            <dd>It is commonly accepted that the first header in the document must be an h1. With this option
+                active, and "identify errors" as well, the lack on this rule is considered error
+            </dd>
+            <dt>Show hidden headers</dt>
+            <dd>When the document includes headers that are hidden for any tool (not only visually hidden, but
+                also hidden for assistive technologies), they are not shown in the tree. When activating
+                this option, they are also shown.
+            </dd>
+        </dl>
+        <h3>HTML 5 outline - settings</h3>
+        <p>According to the W3C, there are not browsers or assistive technologies that support it, so having a good
+            result in the test barely impact in the final accessibility. The HTML 5 algorithm is considered in the list
+            of possible <a href="https://www.w3.org/TR/html53/" target="_blank"> exclusions for the next Proposed
+                Recommendation</a>. If finally it is excluded from it, this feature will be removed from the extension.
+        </p>
+        <dl>
+            <dt>Show section index</dt>
+            <dd>According to the algorithm, each section would have an index in the tree. This setting shows/hides that
+                value
+            </dd>
+            <dt>Show section tag</dt>
+            <dd>With this setting, the tree shows the HTML tag that <a
+                    href="https://www.w3.org/TR/2011/WD-html5-author-20110809/headings-and-sections.html#outlines"
+                    target="_blank">generates the sections</a>.
+            </dd>
+            <dt>Identify errors</dt>
+            <dd>It highlights the tree items that have errors (sections without any header content)</dd>
+            <dt>Show hidden sections</dt>
+            <dd>When the document includes hidden sections (not only visually hidden, but
+                also hidden for assistive technologies), they are not shown in the tree. When activating
+                this option, they are shown. In long documents, this could affect to the performance since it requires
+                to check all elements in the DOM
+            </dd>
+        </dl>
+
+    </div>
+</div>
+<div id="release_notes">
+    <h2>Release notes</h2>
+    <div>
         <dl>
             <dt data-version="3.5.13">24/5/2019 (v 3.5.13)</dt>
             <dd>Fix bug when activating the option for showing hidden headers</dd>
