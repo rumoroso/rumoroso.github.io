@@ -1,220 +1,236 @@
 <html>
 <head><title>Changelog</title></head>
 <body>
-<h1>Headingsmap</h1>
-<div id="help_panel">
-    <h2>Help</h2>
-    <div>
-        <p>HeadingsMap is a browser extension that shows the headers structure of the websites. I created it because I
-            needed a tool for helping me when checking web accessibility.</p>
-        <p>The use of headings is crucial in web because many reasons:</p>
+<h1>Headingsmap, the browser extension</h1>
+<p>HeadingsMap is a browser extension that shows the headers structure of the websites. I created it because I
+    needed a tool for helping me when checking web accessibility.</p>
+<p>The use of headings is crucial in web documents because:</p>
+<ul>
+    <li>SEO: Search engines can identify the topics of the content and use it in their results</li>
+    <li>Accessibility: Assistive technology (like screen readers) extracts the headings structure and offer it
+        to the users so they can scan and access to the content by going directly to the heading
+    </li>
+    <li>Readability: increase the page’s usability by making it more "scannable"</li>
+    </li>
+</ul>
+<p>HTML has six heading elements (H1, H2,... H6) for generating the sections headings. Although the order and
+    occurrence is not constrained by the DTD, in order to maintain the structure and hierarchy of the contents,
+    there are a group of recommendations on how to use them:</p>
+<ul>
+    <li>Always use headings for giving structure to the contents</li>
+    <li>Use their hierarchy according the contents hierarchy (H1 has the highest level)</li>
+    <li>Don't skip heading levels</li>
+    <li>If there are no contents to be headed, don't use them</li>
+    <li>Don't leave the heading empty</li>
+    <li>In general, each document should have only one H1</li>
+    <li>Don't use the same text content for headings that have the same level and that are direct descendants
+        of the same section
+    </li>
+</ul>
+<h2>Extension features</h2>
+<h3>Headings structure</h3>
+<p>Basically, the extension extracts the list of headers and shows the results in a tree according to the
+    hierarchy that they have in the document. The tree has the following features:</p>
+<ul>
+    <li>List the headers in their hierarchical order showing their levels</li>
+    <li>Extracts all the text that each header has (including text alternatives from images)</li>
+    <li>If the heading or its nested elements use <em>aria-label</em> or <em>aria-labelledby</em> attributes, it
+        can also show their contents (optional configuration available in the settings)
+    </li>
+    <li>If there are headings that are hidden for assitive technologies, it is possible to configure the tool
+        for not showing them (so the result is what the assistive technology would access to). Showing them or
+        hiding them in the tree is useful either for SEO evaluation or for Accessibility checks.
+        accessibility checking and for SEO
+    </li>
+    <li>Clicking in the tree node, if the heading is visible, the page scrolls to its position (useful for
+        browsing though long documents) and highlights the header
+    </li>
+    <li>If the page contains multiple documents (included with iframes), the tools shows a document selector for
+        showing the tree of each one
+    </li>
+    <li>It identifies when there are errors related with the headings like wrong hierarchy, empty headers, etc.
+        (optional configuration available in the settings)
+    </li>
+    <li>If there are elements that use <em>role</em> attribute with value <em>heading</em>, they are also listed
+        and considered in the structure (their level is identified with the value of <em>aria-level</em>
+        attribute and it is 2 if it is not defined)
+    </li>
+</ul>
+<h3>HTML5 outline</h3>
+<p>Since its first version (released in May 5th, 2008), the extension had many improvements. One of them was the
+    introduction of the HTML 5 outline algorithm for showing the sections structure of the documents. According
+    to what the W3C says (
+    <a href="https://www.w3.org/TR/2017/REC-html52-20171214/sections.html#creating-an-outline" target="_blank">
+        HTML 5.2 Creating an outline</a>), there are no browsers or assistive technology with native
+    implementations of that algorithm, so it cannot be relied upon to convey document structure to users.
+    Anyway, I decided to keep the analysis because the algorithm is still valid and I think that having it in a
+    tool helps to the developers for adding a better structure to the documents. This feature is not enabled by
+    default, but it can be activated in the settings menu.</p>
+<p>Bear in mind that the algorithm from the W3C involves to traverse through all the HTML elements that the
+    document has, which could directly impact in the performance when the document is long or has complex
+    structure</p>
+<p><strong>note:</strong> The HTML 5 algorithm is considered in the list of possible
+    <a href="https://www.w3.org/TR/html53/" target="_blank"> exclusions for the next Proposed Recommendation
+    </a>. If finally it is excluded from it, this feature could be modified or removed from the extension.</p>
+
+
+<h2>Other features</h2>
+<ul>
+    <li>Detects changes in the DOM and when they finish it updates the trees (mutation observer)</li>
+    <li>It can also be refreshed manually by clicking the tab</li>
+    <li>Dark theme (optional)</li>
+    <li>Version compatible with multiple browsers (it uses the browserExtensions API):
         <ul>
-            <li>SEO: Search engines can identify the topics of the content and use it in their results</li>
-            <li>Accessibility:
-                <ul>
-                    <li>Readability: increase the page’s usability by making it more "scannable"</li>
-                    <li>Assistive technology (like screen readers) extracts the headings structure and offer it
-                        to the users so they can scan and access to the content by going directly to the heading</li>
-                </ul>
+            <li><a href="https://addons.mozilla.org/es/firefox/addon/headingsmap/" target="_blank">Firefox</a>
+            </li>
+            <li><a href="https://chrome.google.com/webstore/detail/headingsmap/flbjommegcjonpdmenkdiocclhjacmbi"
+                   target="_blank">Chrome</a></li>
+            <li>Edge chromium (soon)</li>
+            <li>For other chromium based browsers (like Vivaldi), just use the same link than for Chrome brower
+                (<a href="https://chrome.google.com/webstore/detail/headingsmap/flbjommegcjonpdmenkdiocclhjacmbi"
+                    target="_blank">Vivaldi (uses shame version as Chrome)</a>)
             </li>
         </ul>
-        <ul>
-            <li>List the headers in order with their levels and hierarchy</li>
-            <li>Identify when there are errors (wrong hierarchy, empty headers,...)</li>
-        </ul>
-        <p>Basically, the extension extracts the list of headers and sections structure and shows the results in
-            a tree according to the hierarchy that they have. The headers in the document are identified</p>
-        <p>Since its first version (released in May 5th, 2008), it had a lot of changes (mostly improvements but also
-            bugfixes). One of them was the introduction of the HTML 5 outline algorithm for showing the sections
-            structure of the documents. Sadly, according to what the W3C says (
-            <a href="https://www.w3.org/TR/2017/REC-html52-20171214/sections.html#creating-an-outline" target="_blank">HTML
-                5.2 Creating an outline</a>), there are no browsers or assistive technology with native implementations
-            of that algorithm, so it cannot be relied upon to convey document structure to users. Anyway, I decided to
-            keep the analysis because the algorithm is still valid and I think that having it in a tool helps to the
-            developers for adding a better structure to the documents.</p>
-        <h3>Features</h3>
-        <ul>
-            <li>List of headings with information about their level</li>
-            <li>Notification when there are errors in the hierarchical structure</li>
-            <li>If there are elements that use <em>role</em> attribute with value <em>heading</em>, they are also listed
-                and considered in the structure (their level is according to the value of <em>aria-level</em> attribute
-                or 2 when it is not defined).</li>
-            <li>List of sections with header information and warnings for errors in the structure</li>
-            <li>Information from the main document and also from the documents inside iframes (includes a document
-                selector that is active when there are multiple documents)</li>
-            <li>By clicking on the headers the document scrolls to the position of the header/section and highlights
-                it (if the header is visible)</li>
-            <li>Detects changes in the DOM and when they finish it updates the trees</li>
-            <li>It can also be refreshed manually</li>
-            <li>Allow collapsing list of headers by levels</li>
-            <li>Dark theme (optional)</li>
-            <li>HTML 5 Outline test is optional</li>
-            <li>CSS outline for identifying the header (or section) when clicking the tree and if it is visible in the
-                page</li>
-            <li>It doesn't show hidden headers or sections (hidden for assistive technologies)</li>
-            <li>If the header (or section) is an anchor, the link in the results has the href pointing to it (useful for
-                being copied directly from the tree with the option in the contextual menu of the browser)</li>
-            <li>If header/section content uses aria-label, its value can be shown (optional property configurable in the
-                settings section)</li>
-            <li>Version for multiple browsers (it uses the browserExtensions API):
-                <ul>
-                    <li><a href="https://addons.mozilla.org/es/firefox/addon/headingsmap/" target="_blank">Firefox</a>
-                    </li>
-                    <li><a href="https://chrome.google.com/webstore/detail/headingsmap/flbjommegcjonpdmenkdiocclhjacmbi"
-                           target="_blank">Chrome</a></li>
-                    <li><a href="https://chrome.google.com/webstore/detail/headingsmap/flbjommegcjonpdmenkdiocclhjacmbi"
-                           target="_blank">Vivaldi (uses shame version as Chrome)</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <h3>HeadingsMap tree - settings</h3>
-        <dl>
-            <dt>Show heading level</dt>
-            <dd>It includes the heading level (1 to 6) that is used as tag (h1 to h6)</dd>
-            <dt>Identify errors</dt>
-            <dd>When active, it highlights the tree items that correspond to headers that don't follow
-                the right order (for instance, one h4 after one h2 instead of being h3)
-            </dd>
-            <dt>Error if not initial h1</dt>
-            <dd>It is commonly accepted that the first header in the document must be an h1. With this option
-                active, and "identify errors" as well, the lack on this rule is considered error
-            </dd>
-            <dt>Show hidden headers</dt>
-            <dd>When the document includes headers that are hidden for any tool (not only visually hidden, but
-                also hidden for assistive technologies), they are not shown in the tree. When activating
-                this option, they are also shown.
-            </dd>
-        </dl>
-        <h3>HTML 5 outline - settings</h3>
-        <p>According to the W3C, there are not browsers or assistive technologies that support it, so having a good
-            result in the test barely impact in the final accessibility. The HTML 5 algorithm is considered in the list
-            of possible <a href="https://www.w3.org/TR/html53/" target="_blank"> exclusions for the next Proposed
-                Recommendation</a>. If finally it is excluded from it, this feature will be removed from the extension.
-        </p>
-        <dl>
-            <dt>Show section index</dt>
-            <dd>According to the algorithm, each section would have an index in the tree. This setting shows/hides that
-                value
-            </dd>
-            <dt>Show section tag</dt>
-            <dd>With this setting, the tree shows the HTML tag that <a
-                    href="https://www.w3.org/TR/2011/WD-html5-author-20110809/headings-and-sections.html#outlines"
-                    target="_blank">generates the sections</a>.
-            </dd>
-            <dt>Identify errors</dt>
-            <dd>It highlights the tree items that have errors (sections without any header content)</dd>
-            <dt>Show hidden sections</dt>
-            <dd>When the document includes hidden sections (not only visually hidden, but
-                also hidden for assistive technologies), they are not shown in the tree. When activating
-                this option, they are shown. In long documents, this could affect to the performance since it requires
-                to check all elements in the DOM
-            </dd>
-        </dl>
+    </li>
+</ul>
 
-    </div>
-</div>
-<div id="release_notes">
-    <h2>Release notes</h2>
-    <div>
-        <dl>
-            <dt data-version="3.5.13">24/5/2019 (v 3.5.13)</dt>
-            <dd>Fix bug when activating the option for showing hidden headers</dd>
-            <dd>Fix style error that make the scroll bars don't work as expected</dd>
-            <dd>Performance improvements</dd>
+<h2>Settings</h2>
 
-            <dt data-version="3.5.12">5/5/2019 (v 3.5.12)</dt>
-            <dd>Allow higher levels than 6 when using <em>aria-level</em> attribute</dd>
-            <dd>Consider <em>role</em> with value <em>heading</em> in the outline algorithm</dd>
-            <dd>Consider <em>aria-labelledby</em> attribute</dd>
-            <dd>Fix error on saving settings</dd>
+<h3>HeadingsMap tree</h3>
+<dl>
+    <dt>Show heading level</dt>
+    <dd>It includes the heading level (1 to 6) that is used as tag (h1 to h6)</dd>
+    <dt>Identify errors</dt>
+    <dd>When active, it highlights the tree items that correspond to headers that don't follow
+        the right order (for instance, one h4 after one h2 instead of being h3)
+    </dd>
+    <dt>Error if not initial h1</dt>
+    <dd>It is commonly accepted that the first header in the document must be an h1. With this option
+        active, and "identify errors" as well, the lack on this rule is considered error
+    </dd>
+    <dt>Show hidden headers</dt>
+    <dd>When the document includes headers that are hidden for any tool (not only visually hidden, but
+        also hidden for assistive technologies), they are not shown in the tree. When activating
+        this option, they are also shown.
+    </dd>
+</dl>
+<h3>HTML 5 outline tree</h3>
+<dl>
+    <dt>Show section index</dt>
+    <dd>According to the algorithm, each section would have an index in the tree. This setting shows/hides that
+        value
+    </dd>
+    <dt>Show section tag</dt>
+    <dd>With this setting, the tree shows the HTML tag that <a
+            href="https://www.w3.org/TR/2011/WD-html5-author-20110809/headings-and-sections.html#outlines"
+            target="_blank">generates the sections</a>.
+    </dd>
+    <dt>Identify errors</dt>
+    <dd>It highlights the tree items that have errors (sections without any header content)</dd>
+    <dt>Show hidden sections</dt>
+    <dd>When the document includes hidden sections (not only visually hidden, but
+        also hidden for assistive technologies), they are not shown in the tree. When activating
+        this option, they are shown. In long documents, this could affect to the performance since it requires
+        to check all elements in the DOM
+    </dd>
+</dl>
+<h2>Release notes</h2>
+<dl>
+    <dt data-version="3.5.13">24/5/2019 (v 3.5.13)</dt>
+    <dd>Fix bug when activating the option for showing hidden headers</dd>
+    <dd>Fix style error that make the scroll bars don't work as expected</dd>
+    <dd>Performance improvements</dd>
 
-            <dt data-version="3.5.11">31/3/2019 (v 3.5.11)</dt>
-            <dd>Improve panel resizer</dd>
-            <dd>Improve how tabs are created</dd>
-            <dd>Fix styling when the panel is closed</dd>
+    <dt data-version="3.5.12">5/5/2019 (v 3.5.12)</dt>
+    <dd>Allow higher levels than 6 when using <em>aria-level</em> attribute</dd>
+    <dd>Consider <em>role</em> with value <em>heading</em> in the outline algorithm</dd>
+    <dd>Consider <em>aria-labelledby</em> attribute</dd>
+    <dd>Fix error on saving settings</dd>
 
-            <dt data-version="3.5.7">27/3/2019 (v 3.5.7)</dt>
-            <dd>Fix bug related that prevented showing headers when one of their ancestors had presentational role</dd>
+    <dt data-version="3.5.11">31/3/2019 (v 3.5.11)</dt>
+    <dd>Improve panel resizer</dd>
+    <dd>Improve how tabs are created</dd>
+    <dd>Fix styling when the panel is closed</dd>
 
-            <dt data-version="3.5.6">16/2/2019 (v 3.5.6)</dt>
-            <dd>Fix bug related with the text to show when all headers (including hidden ones) are considered</dd>
+    <dt data-version="3.5.7">27/3/2019 (v 3.5.7)</dt>
+    <dd>Fix bug related that prevented showing headers when one of their ancestors had presentational role</dd>
 
-            <dt data-version="3.5.5">22/1/2019 (v 3.5.5)</dt>
-            <dd>Dark theme by default</dd>
-            <dd>Added new information about the status of the HTML 5 Outline test and its algorithm based on
-                <a href="https://www.w3.org/TR/html53/" target="_blank"> HTML 5.3 Working Draft exclusions for the next
-                    Proposed Recommendation</a></dd>
-            <dd>When installing it for the first time, the HTML Outline tab is not active (activating it can be done in
-                the settings view)
-            </dd>
+    <dt data-version="3.5.6">16/2/2019 (v 3.5.6)</dt>
+    <dd>Fix bug related with the text to show when all headers (including hidden ones) are considered</dd>
 
-            <dt data-version="3.5.4">13/1/2019 (v 3.5.4)</dt>
-            <dd>Stop considering the hidden elements for assistive technologies (optionally can be considered)</dd>
-            <dd>Consider <em>role</em> attribute with value <em>heading</em> when used for defining headers in the
-                document (combined with <em>aria-level</em> attribute). Thanks to Arnaud Delafosse for his proposal
-                about this improvement (and the previous one) and feedback (<a
-                        href="https://twitter.com/arnauddelafosse" target="_blank" title="open in new tab">
-                    @arnauddelafosse</a>)
-            </dd>
-            <dd>Consider error when heading doesn't have any content</dd>
-            <dd>Improvements in document selector</dd>
-            <dd>Simplify settings</dd>
-            <dd>Bug fixes (errors not correctly identified, ...)</dd>
+    <dt data-version="3.5.5">22/1/2019 (v 3.5.5)</dt>
+    <dd>Dark theme by default</dd>
+    <dd>Added new information about the status of the HTML 5 Outline test and its algorithm based on
+        <a href="https://www.w3.org/TR/html53/" target="_blank"> HTML 5.3 Working Draft exclusions for the next
+            Proposed Recommendation</a></dd>
+    <dd>When installing it for the first time, the HTML Outline tab is not active (activating it can be done in
+        the settings view)
+    </dd>
 
-            <dt data-version="3.5.2">24/12/2018 (v 3.5.2)</dt>
-            <dd>Improvements in document selector</dd>
-            <dd>Margin top when scrolling to element</dd>
-            <dd>Prevent refreshing when document is updated and its structure is the same</dd>
-            <dd>Improve in quality code (modularized, updated,...)</dd>
-            <dd>Bug fix, ...</dd>
+    <dt data-version="3.5.4">13/1/2019 (v 3.5.4)</dt>
+    <dd>Stop considering the hidden elements for assistive technologies (optionally can be considered)</dd>
+    <dd>Consider <em>role</em> attribute with value <em>heading</em> when used for defining headers in the
+        document (combined with <em>aria-level</em> attribute). Thanks to Arnaud Delafosse for his proposal
+        about this improvement (and the previous one) and feedback (<a
+                href="https://twitter.com/arnauddelafosse" target="_blank" title="open in new tab">
+            @arnauddelafosse</a>)
+    </dd>
+    <dd>Consider error when heading doesn't have any content</dd>
+    <dd>Improvements in document selector</dd>
+    <dd>Simplify settings</dd>
+    <dd>Bug fixes (errors not correctly identified, ...)</dd>
 
-            <dt data-version="3.5.1">25/11/2018 (v 3.5.1)</dt>
-            <dd>Selector for getting the headers structure from documents that are included in iframes</dd>
-            <dd>Code modularized</dd>
-            <dd>Performance improvements</dd>
-            <dd>Bug fixes, ...</dd>
+    <dt data-version="3.5.2">24/12/2018 (v 3.5.2)</dt>
+    <dd>Improvements in document selector</dd>
+    <dd>Margin top when scrolling to element</dd>
+    <dd>Prevent refreshing when document is updated and its structure is the same</dd>
+    <dd>Improve in quality code (modularized, updated,...)</dd>
+    <dd>Bug fix, ...</dd>
 
-            <dt data-version="3.4.3">03/11/2018 (v 3.4.3)</dt>
-            <dd>New collapsable menu</dd>
-            <dd>Included release notes</dd>
-            <dd>Included help content</dd>
-            <dd>Code changes for improving efficiency in the execution</dd>
+    <dt data-version="3.5.1">25/11/2018 (v 3.5.1)</dt>
+    <dd>Selector for getting the headers structure from documents that are included in iframes</dd>
+    <dd>Code modularized</dd>
+    <dd>Performance improvements</dd>
+    <dd>Bug fixes, ...</dd>
 
-            <dt>25/10/2018 (v 3.4.2)</dt>
-            <dd>User can resize the panel</dd>
-            <dd>The panel can be located in the right side (as option)</dd>
-            <dd>Added <em>overscroll-behavior</em> property to the CSS</dd>
-            <dd>Performance improvements</dd>
+    <dt data-version="3.4.3">03/11/2018 (v 3.4.3)</dt>
+    <dd>New collapsable menu</dd>
+    <dd>Included release notes</dd>
+    <dd>Included help content</dd>
+    <dd>Code changes for improving efficiency in the execution</dd>
 
-            <dt>23/10/2018 (v 3.4.1)</dt>
-            <dd>Only execute the test of the active tab</dd>
-            <dd>Include loading gif for better user experience</dd>
-            <dd>Clicking the tree root scrolls to the top of the page</dd>
-            <dd>Include options panel in the widget</dd>
-            <dd>Bugfix in the HTML5 Outline that were not showing all sections</dd>
+    <dt>25/10/2018 (v 3.4.2)</dt>
+    <dd>User can resize the panel</dd>
+    <dd>The panel can be located in the right side (as option)</dd>
+    <dd>Added <em>overscroll-behavior</em> property to the CSS</dd>
+    <dd>Performance improvements</dd>
 
-            <dt>18/10/2018 (v 3.4.0)</dt>
-            <dd>Show <em>aria-label</em> content as optional feature</dd>
-            <dd>The links in the trees includes the anchors so they work as link for references</dd>
-            <dd>Style scroll-bars for Chrome and Vivaldi</dd>
-            <dd>Improve code quality</dd>
-            <dd>Fix error when considering headers/sections located outside of the view as hidden</dd>
+    <dt>23/10/2018 (v 3.4.1)</dt>
+    <dd>Only execute the test of the active tab</dd>
+    <dd>Include loading gif for better user experience</dd>
+    <dd>Clicking the tree root scrolls to the top of the page</dd>
+    <dd>Include options panel in the widget</dd>
+    <dd>Bugfix in the HTML5 Outline that were not showing all sections</dd>
 
-            <dt>11/10/2018 (v 3.3.7)</dt>
-            <dd>Hidden headers and sections are optionally considered</dd>
-            <dd>Update how the header/section is highlighted</dd>
-            <dd>Improvements in analysis performance</dd>
+    <dt>18/10/2018 (v 3.4.0)</dt>
+    <dd>Show <em>aria-label</em> content as optional feature</dd>
+    <dd>The links in the trees includes the anchors so they work as link for references</dd>
+    <dd>Style scroll-bars for Chrome and Vivaldi</dd>
+    <dd>Improve code quality</dd>
+    <dd>Fix error when considering headers/sections located outside of the view as hidden</dd>
 
-            <dt>09/10/2018 (v 3.3.6)</dt>
-            <dd>Add Dark theme as option</dd>
-            <dd>Set the HTML5 Outline test as optional</dd>
-            <dd>Improve general styling</dd>
-            <dd>Bugfixes</dd>
-        </dl>
-        <p class="note">I am updating the content of the release notes, so older versions are still not shown in the
-            list. Sorry for the delay and thanks for your patience.</p>
-    </div>
-</div>
+    <dt>11/10/2018 (v 3.3.7)</dt>
+    <dd>Hidden headers and sections are optionally considered</dd>
+    <dd>Update how the header/section is highlighted</dd>
+    <dd>Improvements in analysis performance</dd>
+
+    <dt>09/10/2018 (v 3.3.6)</dt>
+    <dd>Add Dark theme as option</dd>
+    <dd>Set the HTML5 Outline test as optional</dd>
+    <dd>Improve general styling</dd>
+    <dd>Bugfixes</dd>
+</dl>
+<p class="note">I am updating the content of the release notes, so older versions are still not shown in the
+    list. Sorry for the delay and thanks for your patience.</p>
 </body>
 </html>
